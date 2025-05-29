@@ -13,8 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(RoleSeeder::class);
-        $this->call(CountriesSeeder::class);
-        $this->call(StateSeeder::class);
+        // Create admin user using the factory
+        $admin = User::factory()->admin()->create();
+        $admin->assignRole('admin');
+
+        // Call other seeders
+        $this->call([
+            RoleSeeder::class,
+            CountriesSeeder::class,
+            StateSeeder::class,
+        ]);
     }
 }
